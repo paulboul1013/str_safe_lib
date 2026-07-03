@@ -4,9 +4,9 @@
 #include <stddef.h>
 #include <sys/types.h>
 #include <errno.h>
-#include <string.h>
 
-// #define E2BIG 7
+
+#define E2BIG 7
 
 //compile-time check 
 #define __same_type(a,b) \
@@ -29,6 +29,16 @@ ssize_t strscpy_pad(char *dst, const char *src,size_t size);
 #define  strscpy_auto(dst,src) \
     strscpy((dst),(src),sizeof(dst))
 
+
+void *memset(void *s,int c,size_t count) {
+    char *ss=s;
+
+    while (count--){
+        *ss++=c;
+    }
+
+    return s;
+}
 
 size_t strnlen(const char *s, size_t maxlen){
     const char *src;
@@ -72,9 +82,15 @@ ssize_t strscpy_pad(char *dst, const char *src,size_t size){
 }
 
 int main() {
-    char *a="hello,world";
-    printf("%zu\n",strnlen(a,5));
-    printf("%zu\n",strnlen(a,15));
+    
+    char *a=(char*)malloc(sizeof(char)*10);
+
+    memset(a,'z',sizeof(char)*10);
+    for(int i=0;i<10;i++){
+        printf("%c ",a[i]);
+    }
+
+    printf("\n");
 
     return 0;
 }
