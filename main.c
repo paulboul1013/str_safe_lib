@@ -8,6 +8,10 @@
 
 // #define E2BIG 7
 
+//compile-time check 
+#define __same_type(a,b) \
+    __builtin_types_compatible_p(__typeof__(a),__typeof__(b))
+
 ssize_t strscpy(char *dst, const char *src,size_t size);
 ssize_t strscpy_pad(char *dst, const char *src,size_t size);
 
@@ -51,33 +55,10 @@ ssize_t strscpy_pad(char *dst, const char *src,size_t size){
 
 int main() {
     
-    char dst[8];
-    ssize_t ret = strscpy(dst,"abcdefg",sizeof(dst));
-    if (ret==-E2BIG){
-        fprintf(stderr,"failed str copy\n");
-        return -1;
-    }
-
-    printf("%s\n",dst);
-    printf("%ld\n",ret);
-
-    char dst2[4];
-    ssize_t ret2=strscpy_auto(dst2,"abc");
-    printf("%s\n",dst2);
-    printf("%ld\n",ret2);
-
-    char dst3[10];
-    ssize_t ret3=strscpy_pad(dst3,"xyz",sizeof(dst3));
-    int count=0;
-    
-    for(int i=0;i<sizeof(dst3);i++){
-        if (dst3[i]=='\0'){
-            count++;
-        }
-        printf("%c",dst3[i]);
-    }
-    printf("count \'\\0\':%d\n",count);
-    printf("\n");
+    char a='a';
+    int int_a=96;
+    char b='b';
+    printf("%d\n",__same_type(int_a,b));
 
 
     return 0;
