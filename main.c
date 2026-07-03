@@ -29,6 +29,14 @@ ssize_t strscpy_pad(char *dst, const char *src,size_t size);
 #define  strscpy_auto(dst,src) \
     strscpy((dst),(src),sizeof(dst))
 
+
+size_t strnlen(const char *s, size_t maxlen){
+    const char *src;
+    
+    for(src=s; maxlen-- && *src!='\0';++src);
+
+    return src-s;
+}
 ssize_t strscpy(char *dst, const char *src,size_t size) {
     size_t i;
 
@@ -64,11 +72,9 @@ ssize_t strscpy_pad(char *dst, const char *src,size_t size){
 }
 
 int main() {
-    char a[10];
-    char *b;
-    __must_be_array(a);
-    __must_be_array(b);
-
+    char *a="hello,world";
+    printf("%zu\n",strnlen(a,5));
+    printf("%zu\n",strnlen(a,15));
 
     return 0;
 }
