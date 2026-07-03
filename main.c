@@ -12,6 +12,16 @@
 #define __same_type(a,b) \
     __builtin_types_compatible_p(__typeof__(a),__typeof__(b))
 
+
+#define __BUILD_BUG_ON_ZERO_MSG(e, msg, ...) ((int)sizeof(struct {_Static_assert(!(e), msg);}))
+
+//assert at compile time if e is zero
+#define BUILD_BUG_ON_ZERO(e, ...) \
+    __BUILD_BUG_ON_ZERO_MSG(e, ##__VA_ARGS__, #e " is true")
+
+#define __must_be_array(a) \
+    BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
+
 ssize_t strscpy(char *dst, const char *src,size_t size);
 ssize_t strscpy_pad(char *dst, const char *src,size_t size);
 
@@ -54,11 +64,10 @@ ssize_t strscpy_pad(char *dst, const char *src,size_t size){
 }
 
 int main() {
-    
-    char a='a';
-    int int_a=96;
-    char b='b';
-    printf("%d\n",__same_type(int_a,b));
+    char a[10];
+    char *b;
+    __must_be_array(a);
+    __must_be_array(b);
 
 
     return 0;
