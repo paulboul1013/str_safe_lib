@@ -52,3 +52,33 @@ ssize_t strscpy_pad(char *dst, const char *src,size_t size){
 
     return ret;
 }
+
+void *memcpy(void *dest,const void *src,size_t n) {
+    char *temp=dest;
+    const char *s=src;
+
+    while(n--) {
+        *temp++=*s++;
+    }
+    return dest;
+}
+
+void *memmove(void *dest,const void *src,size_t n) {
+    uint8_t *d = dest;
+	const uint8_t *s = src;
+
+    if (s > d  || (s+n)<=d ){ //check memory overlap 
+        // for(size_t i=0;i<n;i++){ //forward copy
+        //     dst[i]=src[i];
+        // }
+        //no memory overlap
+        return memcpy(dest,src,n);
+    }
+    else{
+        for(ssize_t i = n-1; i>=0; i--){ //reverse copy
+            d[i]=s[i];
+        }
+    }
+
+    return dest;
+}

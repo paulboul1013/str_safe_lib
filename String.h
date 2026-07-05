@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <limits.h>
 #include <sys/types.h>
+#include <stdint.h>
 
 #define E2BIG 7
 
@@ -24,9 +25,11 @@
 
 void *memset(void *s,int c,size_t count);
 size_t strnlen(const char *s, size_t maxlen);
-ssize_t strscpy(char *dst, const char *src,size_t size);
-ssize_t strscpy_pad(char *dst, const char *src,size_t size);
-
+ssize_t strscpy(char *dst, const char *src,size_t size); //string copy for size len
+ssize_t strscpy_pad(char *dst, const char *src,size_t size); //string copy for size len and left fill '\0' 
+void *memcpy(void *dest,const void *src,size_t n); //memory must be not overlap
+void *memmove(void *dest,const void *src,size_t n); //same as memcpy but have memory overlap
+void *memcpy_pad(void *des,size_t dest_len,const void *src,size_t src_len,int pad);
 
 // strscpy two parameters version
 #define  strscpy_auto(dst,src) \

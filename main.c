@@ -7,15 +7,13 @@
 
 int main() {
     
-    char test[10];
-    char *test2="hello";
-    strscpy_auto(test,test2);
-    printf("%s\n",test);
+    char s[6];
+    memmove(s,"hello",6);
+    printf("%s\n",s);
 
-    char test3[10];
-    char *pad_left="aaaaa";
-    strscpy_pad(test3,pad_left,6);
-    printf("%s\n",test3);
+    char s1[6];
+    memcpy(s1,"world",6);
+    printf("%s\n",s1);
 
     return 0;
 }
